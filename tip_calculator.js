@@ -5,3 +5,5 @@ let numPeople = parseInt(inp[2]); // Don't change this line
 // Type your code below
 
 console.log("Bill Split Calculator")
+let total = parseFloat(billAmount * (1 + (tipPercentage / 100)))
+console.log(total)
