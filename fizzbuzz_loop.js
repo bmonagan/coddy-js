@@ -11,6 +11,9 @@ function fizzBuzz(num){
     else if (num % 7 == 0){
         console.log("Buzz");
     }
+    else if(String(num).includes('3')){
+        console.log("Almost Fizz")
+    }
     else{
         console.log(num);
     }}
