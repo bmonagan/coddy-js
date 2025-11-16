@@ -16,8 +16,21 @@ function removeItem(ingredient){
         console.log(`${ingredient} is not in the grocery list.`)
     }
 }
+function viewList(){
+    if (groceryList.length === 0){
+        console.log("The grocery list is empty.");
+        return
+    }
+    console.log("Grocery List:");
+    for (let i = 0; i < groceryList.length;i++){
+        console.log(`${i+1}. ${groceryList[i]}`);
+    }
+}
+viewList();
 addItem("Milk");
 addItem("Bread");
 addItem("Eggs");
+viewList();
 removeItem("Bread");
+viewList();
 removeItem("Cheese");
