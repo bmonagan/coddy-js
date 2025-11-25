@@ -25,6 +25,7 @@ let libraryData = {
 
 function manageLibrary(actions, data) {
     let results = [];
+    
 
     for (let i = 0; i < actions.length; i++) {
         const currentAction = actions[i];
@@ -37,7 +38,7 @@ function manageLibrary(actions, data) {
             case 'printReaders':
                 results.push(libraryData.readers);
                 break;
-            case "addBook":
+            case 'addBook':
                 // Add a new book to the library
                 let newBook = {
                     id: libraryData.books.length + 1,
@@ -53,6 +54,19 @@ function manageLibrary(actions, data) {
                 };
                 libraryData.books.push(newBook);
                 results.push("Book added successfully!");
+                break;
+            case 'searchByTitle':
+                let search_results = [];
+                const allbooks = libraryData.books;
+                let search_title = currentData.toLowerCase();
+                for (let book of allbooks){
+                    let c_title = book.title.toLowerCase();
+                    if (c_title.includes(search_title)){
+                        search_results.push(book);
+                    }
+
+                }
+                results.push(search_results);
                 break;
             default:
                 results.push("Invalid action!");
