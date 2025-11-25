@@ -74,6 +74,33 @@ function manageLibrary(actions, data) {
                 }
                 results.push(genreResults);
                 break;
+            case 'markAsRead':
+                if (currentData.rating > 5 || currentData.rating < 1){
+                    results.push('Invalid rating! Please rate between 1 and 5');
+                    break;
+                }
+                let in_lib = false;
+                for(let i = 0; i < libraryData.books.length; i++) {
+                    if (libraryData.books[i].id === currentData.bookId){
+                        in_lib = true;
+                        libraryData.books[i].rating = currentData.rating;
+                        libraryData.books[i].isRead = true;
+
+
+
+                    }
+                }
+                if (in_lib === false){
+                    results.push('Book not found!');
+                    break;
+                }
+                else {
+                    results.push('Book marked as read!');
+                }
+
+
+
+                break;
             default:
                 results.push("Invalid action!");
         }
