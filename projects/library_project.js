@@ -37,6 +37,23 @@ function manageLibrary(actions, data) {
             case 'printReaders':
                 results.push(libraryData.readers);
                 break;
+            case "addBook":
+                // Add a new book to the library
+                let newBook = {
+                    id: libraryData.books.length + 1,
+                    title: currentData.title,
+                    author: currentData.author,
+                    year: currentData.year,
+                    genre: currentData.genre,
+                    isRead: false,
+                    rating: 0,
+                    borrowed: false,
+                    borrowedBy: "",
+                    borrowDate: ""
+                };
+                libraryData.books.push(newBook);
+                results.push("Book added successfully!");
+                break;
             default:
                 results.push("Invalid action!");
         }
