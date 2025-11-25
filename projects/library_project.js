@@ -1,5 +1,5 @@
-// Initial library data
-let libraryData = {
+// Initialize library data
+const libraryData = {
     books: [
         {
             id: 1,
@@ -20,13 +20,11 @@ let libraryData = {
             favoriteGenre: "Fiction",
         }
     ]
-}
-
+};
 
 function manageLibrary(actions, data) {
     let results = [];
     
-
     for (let i = 0; i < actions.length; i++) {
         const currentAction = actions[i];
         const currentData = data[i];
@@ -38,7 +36,7 @@ function manageLibrary(actions, data) {
             case 'printReaders':
                 results.push(libraryData.readers);
                 break;
-            case 'addBook':
+            case "addBook":
                 // Add a new book to the library
                 let newBook = {
                     id: libraryData.books.length + 1,
@@ -55,23 +53,31 @@ function manageLibrary(actions, data) {
                 libraryData.books.push(newBook);
                 results.push("Book added successfully!");
                 break;
-            case 'searchByTitle':
-                let search_results = [];
-                const allbooks = libraryData.books;
-                let search_title = currentData.toLowerCase();
-                for (let book of allbooks){
-                    let c_title = book.title.toLowerCase();
-                    if (c_title.includes(search_title)){
-                        search_results.push(book);
+            case "searchByTitle":
+                // Search for books by title
+                let searchResults = [];
+                for(let i = 0; i < libraryData.books.length; i++) {
+                    if(libraryData.books[i].title.toLowerCase().includes(currentData.toLowerCase())) {
+                        searchResults.push(libraryData.books[i]);
                     }
-
                 }
-                results.push(search_results);
+                results.push(searchResults);
+                break;
+
+          case "filterByGenre":
+                // Filter books by genre
+                let genreResults = [];
+                for(let i = 0; i < libraryData.books.length; i++) {
+                    if(libraryData.books[i].genre === currentData) {
+                        genreResults.push(libraryData.books[i]);
+                    }
+                }
+                results.push(genreResults);
                 break;
             default:
                 results.push("Invalid action!");
         }
     }
+
     return results;
 }
-
