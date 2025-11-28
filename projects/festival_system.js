@@ -118,6 +118,26 @@ function manageFestival(actions, data) {
 
                 }
                 break;
+            case "buyTicket":
+                const foundScreening = festivalData.screenings.find(screen => screen.id === currentData.screeningId);
+                if (!foundScreening){
+                    results.push('Screening not found!');
+                    break;
+                }
+                const seatsLeft = foundScreening.availableSeats >= currentData.quantity;
+                if (!seatsLeft){
+                    results.push('Not enough seats available!');
+                    break;
+                }
+                // assumes other requirements have been met.
+                let targetScreening = foundScreening;
+                for (let i = 0; i < currentData.quantity; i++){
+                    festivalData.tickets.add(`${targetScreening.id}-${targetScreening.availableSeats}`);
+                    targetScreening.availableSeats--;
+                }
+
+                results.push('Tickets purchased successfully!');
+                break;
 
                 
             default:
