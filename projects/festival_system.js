@@ -71,6 +71,54 @@ function manageFestival(actions, data) {
                 festivalData.venues.push(new_venue);
                 results.push('Venue added successfully!');
                 break;
+            case "addScreening":
+                let mclear = false;
+                let vclear = false;
+                let screenings = true;
+                for (movie of festivalData.movies){
+                    if (currentData.movieId === movie.id){
+                        mclear = true;
+                        break;
+                    }}
+                for (venue of festivalData.venues){
+                    if (currentData.venueId === venue.id){
+                        vclear = true;
+                        break;
+                    }}
+                for (screen of festivalData.screenings){
+                    if (currentData.date === screen.date && currentData.time === screen.time){
+                        screenings = false;
+                        break;
+                    }
+                }
+                if (mclear && vclear && screenings){
+                    let availableSeats = 0;
+                    for (venue of festivalData.venues){
+                        if (currentData.venueId === venue.id){
+                            availableSeats = venue.capacity;
+                        }
+                    }
+                    festivalData.screenings.push({
+                        id: festivalData.screenings.length + 1,
+                        movieId: currentData.movieId,
+                        venueId : currentData.venueId,
+                        date : currentData.date,
+                        time : currentData.time,
+                        availableSeats: availableSeats
+
+                    })
+                    results.push("Screening added successfully!");
+
+                }
+                else if (!screenings){
+                    results.push("Screening already exists at this time!")
+                }
+                else {
+                    results.push("Movie or venue not found!")
+
+                }
+                break;
+
                 
             default:
                 results.push("Invalid action!");
