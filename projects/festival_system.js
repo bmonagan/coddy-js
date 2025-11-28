@@ -44,10 +44,33 @@ function manageFestival(actions, data) {
             case "listTickets":
                 results.push(festivalData.tickets);
                break;
-
+ 
             case "listScreenings":
                 results.push(festivalData.screenings);
-               break;
+                break;
+            case "addMovie":
+                const new_movie = {
+                    id: festivalData.movies.length + 1,
+                    title : currentData.title,
+                    director : currentData.director,
+                    year : currentData.year,
+                    mainGenre : currentData.mainGenre,
+                    secondGenre : currentData.secondGenre,
+                    avgRating : 0,
+                    available : true
+                }
+                festivalData.movies.push(new_movie);
+                results.push("Movie added successfully!")
+                break;
+            case "addVenue":
+                const new_venue = {
+                    id: festivalData.venues.length + 1,
+                    name : currentData.name,
+                    capacity : currentData.capacity
+                }
+                festivalData.venues.push(new_venue);
+                results.push('Venue added successfully!');
+                break;
                 
             default:
                 results.push("Invalid action!");
