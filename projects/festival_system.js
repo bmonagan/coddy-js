@@ -138,6 +138,21 @@ function manageFestival(actions, data) {
 
                 results.push('Tickets purchased successfully!');
                 break;
+            case "rateMovie":
+                const targetMovie = festivalData.movies.find(movie => movie.id === currentData.movieId);
+                if (currentData.avgRating > 5 || currentData.avgRating < 1){
+                    results.push("Invalid rating! Must be between 1 and 5");
+                    break;
+                }
+
+                if (!targetMovie){
+                    results.push("Movie not found!");
+                    break;
+                }
+                targetMovie.avgRating = currentData.avgRating;
+                results.push("Rating added successfully!");
+                break;
+
 
                 
             default:
