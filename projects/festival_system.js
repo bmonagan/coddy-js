@@ -152,9 +152,25 @@ function manageFestival(actions, data) {
                 targetMovie.avgRating = currentData.avgRating;
                 results.push("Rating added successfully!");
                 break;
+            case "cancelScreening":
+                const cancelledScreening = festivalData.screenings.find(screen => screen.id === currentData.screeningId);
 
+                if (!cancelledScreening){
+                    results.push("Screening not found!");
+                    break;
+                }
+                for (const ticketStub of festivalData.tickets) {
+                    if (ticketStub.includes(currentData.screeningId)) {
+        
+                    festivalData.tickets.delete(ticketStub); 
+                    }}
+                const screeningIndex = festivalData.screenings.findIndex(screen => screen.id === currentData.screeningId);
+                if (screeningIndex !== -1) {
+                    festivalData.screenings.splice(screeningIndex, 1);
+                }
+                results.push("Screening cancelled successfully!");
+                break;
 
-                
             default:
                 results.push("Invalid action!");
         }
