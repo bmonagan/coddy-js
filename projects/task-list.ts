@@ -7,8 +7,6 @@ interface Task {
     title: string,
     status: Status
 }
-
-
 // Create the task variables
 let firstTask: Task = {
     id: 1,
@@ -26,15 +24,25 @@ let thirdTask: Task = {
     title: 'Write unit tests',
     status: 'done'
 };
-
+let initialTasks = [firstTask,secondTask];
 // Create the getTaskInfo function
 function getTaskInfo(task:Task): string { 
-    return `Task ${task.id}: ${task.title} - ${task.status}`;
+    return `Task ${task.id}: ${task.title} (${task.status})`;
 }
+function addTask(tasklist: Task[], title: string): Task[] { 
+    let newId = tasklist.length + 1;
+    let new_obj: Task = {
+        id: newId,
+        title: title,
+        status: "todo" } 
+    let new_tasklist: Task[] = [...tasklist, new_obj];
+    return new_tasklist;
+}
+let updatedTasks = addTask(initialTasks,'Review code changes');
 // Print the required outputs
-
-console.log(getTaskInfo(firstTask));
-console.log(getTaskInfo(secondTask));
-console.log(getTaskInfo(thirdTask));
-console.log(firstTask.status);
-console.log(secondTask.title);
+let lastIdx = updatedTasks.length - 1 
+console.log(initialTasks.length);
+console.log(updatedTasks.length);
+console.log(getTaskInfo(updatedTasks[lastIdx]));
+console.log(updatedTasks[lastIdx].title);
+console.log(updatedTasks[lastIdx].status);
