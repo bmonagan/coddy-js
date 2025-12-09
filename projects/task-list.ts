@@ -21,10 +21,10 @@ let secondTask: Task = {
 };
 let thirdTask: Task = {
     id: 3,
-    title: 'Write unit tests',
+    title: 'Deploy to production',
     status: 'done'
 };
-let testTasks: Task[] = [firstTask,secondTask, thirdTask];
+
 // Create the getTaskInfo function
 function getTaskInfo(task:Task): string { 
     return `Task ${task.id}: ${task.title} - Status: ${task.status}`;
@@ -54,11 +54,22 @@ function changeTaskStatus(tasklist: Task[], taskId: number, newStatus: Status): 
 
     return new_tasklist;
 }
-let progressTasks = changeTaskStatus(testTasks,1,'in-progress');
-let completedTasks = changeTaskStatus(progressTasks,2,'done');
+function listTasksByStatus(taskList: Task[], status:Status): Task[]{
+    const new_tasklist: Task[] = taskList.filter((task) => task.status === status);
+    return new_tasklist;
 
-console.log(getTaskInfo(testTasks[0]));
-console.log(getTaskInfo(progressTasks[0]));
-console.log(getTaskInfo(completedTasks[1]));
-console.log(testTasks[0].status);
-console.log(completedTasks[1].status);
+}
+
+let mixedTasks: Task[] = [firstTask,secondTask, thirdTask];
+
+const todoTasks = listTasksByStatus(mixedTasks,'todo');
+const inProgressTasks = listTasksByStatus(mixedTasks,'in-progress');
+const doneTasks = listTasksByStatus(mixedTasks,'done');
+
+console.log(mixedTasks.length);
+console.log(todoTasks.length);
+console.log(inProgressTasks.length);
+console.log(doneTasks.length);
+console.log(getTaskInfo(todoTasks[0]));
+console.log(getTaskInfo(inProgressTasks[0]));
+console.log(getTaskInfo(doneTasks[0]));
