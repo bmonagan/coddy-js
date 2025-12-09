@@ -10,12 +10,12 @@ interface Task {
 // Create the task variables
 let firstTask: Task = {
     id: 1,
-    title: 'Learn TypeScript interfaces',
+    title: 'Learn TypeScript basics',
     status: 'todo'
 };
 let secondTask: Task = {
     id: 2,
-    title: 'Build task management app',
+    title: 'Build a simple app',
     status: 'in-progress'
 
 };
@@ -24,10 +24,10 @@ let thirdTask: Task = {
     title: 'Write unit tests',
     status: 'done'
 };
-let initialTasks = [firstTask,secondTask];
+let testTasks: Task[] = [firstTask,secondTask, thirdTask];
 // Create the getTaskInfo function
 function getTaskInfo(task:Task): string { 
-    return `Task ${task.id}: ${task.title} (${task.status})`;
+    return `Task ${task.id}: ${task.title} - Status: ${task.status}`;
 }
 function addTask(tasklist: Task[], title: string): Task[] { 
     let newId = tasklist.length + 1;
@@ -38,11 +38,27 @@ function addTask(tasklist: Task[], title: string): Task[] {
     let new_tasklist: Task[] = [...tasklist, new_obj];
     return new_tasklist;
 }
-let updatedTasks = addTask(initialTasks,'Review code changes');
-// Print the required outputs
-let lastIdx = updatedTasks.length - 1 
-console.log(initialTasks.length);
-console.log(updatedTasks.length);
-console.log(getTaskInfo(updatedTasks[lastIdx]));
-console.log(updatedTasks[lastIdx].title);
-console.log(updatedTasks[lastIdx].status);
+function changeTaskStatus(tasklist: Task[], taskId: number, newStatus: Status): Task[] {
+    
+    const new_tasklist: Task[] = tasklist.map(task => {
+        
+        if (task.id === taskId) {
+    
+            return {
+                ...task, 
+                status: newStatus 
+            };
+        }
+        return task;
+    });
+
+    return new_tasklist;
+}
+let progressTasks = changeTaskStatus(testTasks,1,'in-progress');
+let completedTasks = changeTaskStatus(progressTasks,2,'done');
+
+console.log(getTaskInfo(testTasks[0]));
+console.log(getTaskInfo(progressTasks[0]));
+console.log(getTaskInfo(completedTasks[1]));
+console.log(testTasks[0].status);
+console.log(completedTasks[1].status);
