@@ -30,7 +30,7 @@ function getTaskInfo(task:Task): string {
     return `Task ${task.id}: ${task.title} - Status: ${task.status}`;
 }
 function addTask(tasklist: Task[], title: string): Task[] { 
-    let newId = tasklist.length + 1;
+    let newId = tasklist[tasklist.length -1].id + 1;
     let new_obj: Task = {
         id: newId,
         title: title,
@@ -79,7 +79,19 @@ let simpleTasks: Task[] = [
     {id:103, title:"Deploy to production", status: 'done'}
 ];
 
-printTaskSummary(firstTask);
-printTaskSummary(simpleTasks[1]);
-printAllTaskSummaries(simpleTasks);
-printTaskSummary(doneTasks[doneTasks.length-1]);
+let projectTasks: Task[] = [
+    {id:201, title:"Setup development environment", status:'done'},
+    {id:202, title:"Create project structure", status:'todo'},
+];
+
+let expandedTasks = addTask(projectTasks, "Write documentation");
+let updatedProjectTasks = changeTaskStatus(expandedTasks, 202, 'in-progress');
+let finalTasks = changeTaskStatus(updatedProjectTasks, 203, 'done');
+let completedProjectTasks = listTasksByStatus(finalTasks, 'done');
+
+console.log(projectTasks.length);
+console.log(finalTasks.length);
+console.log(completedProjectTasks.length);
+printTaskSummary(completedProjectTasks[0]);
+printTaskSummary(completedProjectTasks[completedProjectTasks.length - 1]);
+printAllTaskSummaries(finalTasks);
