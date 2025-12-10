@@ -10,7 +10,7 @@ interface Task {
 // Create the task variables
 let firstTask: Task = {
     id: 1,
-    title: 'Learn TypeScript basics',
+    title: 'Learn TypeScript',
     status: 'todo'
 };
 let secondTask: Task = {
@@ -59,17 +59,27 @@ function listTasksByStatus(taskList: Task[], status:Status): Task[]{
     return new_tasklist;
 
 }
-
+function printTaskSummary(task:Task): void{
+    console.log(`ID: ${task.id}, Title: ${task.title}, Status: ${task.status}`);
+}
+function printAllTaskSummaries(tasklist: Task[]): void {
+    for (let task of tasklist) {
+        printTaskSummary(task);}
+}
 let mixedTasks: Task[] = [firstTask,secondTask, thirdTask];
 
 const todoTasks = listTasksByStatus(mixedTasks,'todo');
 const inProgressTasks = listTasksByStatus(mixedTasks,'in-progress');
-const doneTasks = listTasksByStatus(mixedTasks,'done');
+let fakeTask: Task = {id: 8, title: "Plan project", status:"done"};
+let doneTasks = [];
+doneTasks.push(fakeTask);
+let simpleTasks: Task[] = [
+    {id:101, title: "Design user interface", status: 'todo'},
+    {id:102, title:"Implement authentication", status: 'in-progress'},
+    {id:103, title:"Deploy to production", status: 'done'}
+];
 
-console.log(mixedTasks.length);
-console.log(todoTasks.length);
-console.log(inProgressTasks.length);
-console.log(doneTasks.length);
-console.log(getTaskInfo(todoTasks[0]));
-console.log(getTaskInfo(inProgressTasks[0]));
-console.log(getTaskInfo(doneTasks[0]));
+printTaskSummary(firstTask);
+printTaskSummary(simpleTasks[1]);
+printAllTaskSummaries(simpleTasks);
+printTaskSummary(doneTasks[doneTasks.length-1]);
