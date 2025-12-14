@@ -5,6 +5,12 @@ interface InventoryItem<T> {
   details: T;
 }
 
+function addItem<T>(inventory: InventoryItem<T>[], newItem: InventoryItem<T>): InventoryItem<T>[] {
+    // You also had a typo inside the function body: new_item should be newItem
+    inventory.push(newItem);
+    return inventory;
+}
+
 // Create the required objects
 const bookItem: InventoryItem<{ title: string; author: string }> = {
   id: 1,
@@ -24,12 +30,28 @@ const clothingItem: InventoryItem<{ size: string; color: string }> = {
   details: { size: "M", color: "Blue" }
 };
 
+let bookInventory = [bookItem];
+let newBook: InventoryItem<{title: string, author:string}> = {
+    id: 4,
+    quantity: 2,
+    details: { title: "Advanced TypeScript", author: "Jane Smith" }
+}
+let electronicInventory = [electronicItem];
+let newElectronic: InventoryItem<{brand:string, model: string}> = {
+    id: 5,
+    quantity: 1,
+    details: { brand: "GadgetCorp", model: "Z500" }
+}
+
+
+let updatedBookInventory = addItem(bookInventory,newBook);
+let updatedElectronicInventory = addItem(electronicInventory, newElectronic);
 // Print the required outputs
-console.log(bookItem.id);
-console.log(bookItem.quantity);
-console.log(bookItem.details.title);
-console.log(bookItem.details.author);
-console.log(electronicItem.details.brand);
-console.log(electronicItem.details.model);
-console.log(clothingItem.details.size);
-console.log(clothingItem.details.color);
+console.log(updatedBookInventory.length);
+console.log(updatedBookInventory[1].details.title);
+console.log(updatedBookInventory[1].details.author);
+console.log(updatedElectronicInventory.length);
+console.log(updatedElectronicInventory[1].details.brand);
+console.log(updatedElectronicInventory[1].details.model);
+console.log(updatedElectronicInventory[0].id);
+console.log(updatedElectronicInventory[1].quantity);
