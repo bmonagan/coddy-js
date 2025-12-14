@@ -10,6 +10,14 @@ function addItem<T>(inventory: InventoryItem<T>[], newItem: InventoryItem<T>): I
     inventory.push(newItem);
     return inventory;
 }
+function findItemByID<T>(inventory: InventoryItem<T>[], id: number): InventoryItem<T> | undefined { 
+    for (let item of inventory) { 
+        if (item.id === id){
+            return item;
+        }
+    }
+    return undefined;
+}
 
 // Create the required objects
 const bookItem: InventoryItem<{ title: string; author: string }> = {
@@ -43,15 +51,50 @@ let newElectronic: InventoryItem<{brand:string, model: string}> = {
     details: { brand: "GadgetCorp", model: "Z500" }
 }
 
+const mixedBookInventory: InventoryItem<{ title: string; author: string }>[] = [
+  {
+    id: 10,
+    quantity: 3,
+    details: {
+      title: "JavaScript Basics",
+      author: "Alice Brown",
+    },
+  },
+  {
+    id: 11,
+    quantity: 7,
+    details: {
+      title: "React Fundamentals",
+      author: "Bob Wilson",
+    },
+  },
+  {
+    id: 12,
+    quantity: 2,
+    details: {
+      title: "Node.js Guide",
+      author: "Carol Davis",
+    },
+  },
+];
+const mixedElectronicInventory: InventoryItem<{ brand: string; model: string }>[] = [
+  {
+    id: 20,
+    quantity: 5,
+    details: {
+      brand: "Samsung",
+      model: "Galaxy S23",
+    },
+  },
+  {
+    id: 21,
+    quantity: 1,
+    details: {
+      brand: "Apple",
+      model: "iPhone 15",
+    },
+  },
+];
 
 let updatedBookInventory = addItem(bookInventory,newBook);
 let updatedElectronicInventory = addItem(electronicInventory, newElectronic);
-// Print the required outputs
-console.log(updatedBookInventory.length);
-console.log(updatedBookInventory[1].details.title);
-console.log(updatedBookInventory[1].details.author);
-console.log(updatedElectronicInventory.length);
-console.log(updatedElectronicInventory[1].details.brand);
-console.log(updatedElectronicInventory[1].details.model);
-console.log(updatedElectronicInventory[0].id);
-console.log(updatedElectronicInventory[1].quantity);
