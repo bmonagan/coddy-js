@@ -1,9 +1,19 @@
 // Create the generic InventoryItem interface
 interface InventoryItem<T> {
-  id: number;
+  id: number; 
   quantity: number;
   details: T;
 }
+type Book = {
+    title: string,
+    author: string
+}
+type Electronic = {
+    brand: string,
+    model: string
+}
+type BookItem = InventoryItem<Book>;
+type ElectronicItem = InventoryItem<Electronic>;
 
 function addItem<T>(inventory: InventoryItem<T>[], newItem: InventoryItem<T>): InventoryItem<T>[] {
     // You also had a typo inside the function body: new_item should be newItem
@@ -98,3 +108,31 @@ const mixedElectronicInventory: InventoryItem<{ brand: string; model: string }>[
 
 let updatedBookInventory = addItem(bookInventory,newBook);
 let updatedElectronicInventory = addItem(electronicInventory, newElectronic);
+
+let specificBook: BookItem = {
+    id: 100,
+    quantity: 8,
+    details: { title: "Clean Code", author: "Robert Martin" }
+}
+let specificElectronic: ElectronicItem = {
+    id: 200,
+    quantity: 4,
+    details: { brand: "Sony", model: "WH-1000XM4" }
+}
+
+let bookStore: BookItem[] = [specificBook];
+let electronicStore: ElectronicItem[] = [specificElectronic];
+let anotherBook: BookItem = {
+    id: 101,
+    quantity: 3,
+    details: { title: "Design Patterns", author: "Gang of Four" }
+}
+let expandedBookStore: BookItem[] = addItem(bookStore,anotherBook);
+console.log(specificBook.details.title);
+console.log(specificBook.details.author);
+console.log(specificElectronic.details.brand);
+console.log(specificElectronic.details.model);
+console.log(expandedBookStore.length);
+console.log(findItemByID(expandedBookStore, 101)?.details.title); 
+console.log(findItemByID(electronicStore, 200)?.quantity);
+console.log(expandedBookStore[1].details.author);
