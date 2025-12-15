@@ -29,6 +29,15 @@ function findItemByID<T>(inventory: InventoryItem<T>[], id: number): InventoryIt
     return undefined;
 }
 
+function getItemDetails(item: InventoryItem<any>): void {
+  if ('title' in item.details) {
+    console.log(`Book: ${item.details.title} by ${item.details.author}`);
+  } else if ('brand' in item.details) {
+    console.log(`Electronic: ${item.details.brand} ${item.details.model}`);
+  } else {
+    console.log("Unknown item type");
+  }
+}
 // Create the required objects
 const bookItem: InventoryItem<{ title: string; author: string }> = {
   id: 1,
@@ -105,19 +114,35 @@ const mixedElectronicInventory: InventoryItem<{ brand: string; model: string }>[
     },
   },
 ];
+const testBook: InventoryItem<any> = {
+    id: 300,
+    quantity: 6,
+    details: { title: "TypeScript Handbook", author: "Microsoft Team" }
+};
 
+const testElectronic: InventoryItem<any> = {
+    id: 400,
+    quantity: 2,
+    details: { brand: "Dell", model: "XPS 13" }
+};
+
+const unknownItem: InventoryItem<any> = {
+    id: 500,
+    quantity: 1,
+    details: { color: "Red", size: "Large" }
+};
 let updatedBookInventory = addItem(bookInventory,newBook);
 let updatedElectronicInventory = addItem(electronicInventory, newElectronic);
 
 let specificBook: BookItem = {
     id: 100,
     quantity: 8,
-    details: { title: "Clean Code", author: "Robert Martin" }
+    details: { title: "JavaScript Guide", author: "John Doe" }
 }
 let specificElectronic: ElectronicItem = {
     id: 200,
     quantity: 4,
-    details: { brand: "Sony", model: "WH-1000XM4" }
+    details: { brand: "Apple", model: "iPhone 14" }
 }
 
 let bookStore: BookItem[] = [specificBook];
@@ -128,11 +153,8 @@ let anotherBook: BookItem = {
     details: { title: "Design Patterns", author: "Gang of Four" }
 }
 let expandedBookStore: BookItem[] = addItem(bookStore,anotherBook);
-console.log(specificBook.details.title);
-console.log(specificBook.details.author);
-console.log(specificElectronic.details.brand);
-console.log(specificElectronic.details.model);
-console.log(expandedBookStore.length);
-console.log(findItemByID(expandedBookStore, 101)?.details.title); 
-console.log(findItemByID(electronicStore, 200)?.quantity);
-console.log(expandedBookStore[1].details.author);
+getItemDetails(testBook);
+getItemDetails(testElectronic);
+getItemDetails(unknownItem);
+getItemDetails(findItemByID(bookStore,100));
+getItemDetails(findItemByID(electronicStore, 200));
