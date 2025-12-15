@@ -1,34 +1,43 @@
-// Create the generic InventoryItem interface
+// Generic interface for inventory items
 interface InventoryItem<T> {
-  id: number; 
+  id: number;
   quantity: number;
   details: T;
 }
+
+// Type aliases
 type Book = {
-    title: string,
-    author: string
-}
+  title: string;
+  author: string;
+};
+
 type Electronic = {
-    brand: string,
-    model: string
-}
+  brand: string;
+  model: string;
+};
+
 type BookItem = InventoryItem<Book>;
 type ElectronicItem = InventoryItem<Electronic>;
 
-function addItem<T>(inventory: InventoryItem<T>[], newItem: InventoryItem<T>): InventoryItem<T>[] {
-    // You also had a typo inside the function body: new_item should be newItem
-    inventory.push(newItem);
-    return inventory;
-}
-function findItemByID<T>(inventory: InventoryItem<T>[], id: number): InventoryItem<T> | undefined { 
-    for (let item of inventory) { 
-        if (item.id === id){
-            return item;
-        }
-    }
-    return undefined;
+// Generic function to add items to inventory
+function addItem<T>(inventory: InventoryItem<T>[], item: InventoryItem<T>): void {
+  inventory.push(item);
 }
 
+// Generic function to find items by ID
+function findItemById<T>(inventory: InventoryItem<T>[], id: number): InventoryItem<T> | undefined {
+  return inventory.find(item => item.id === id);
+}
+
+// Inventory arrays
+const bookStore: BookItem[] = [];
+const electronicStore: ElectronicItem[] = [];
+
+// Add some initial items
+addItem(bookStore, { id: 100, quantity: 5, details: { title: "JavaScript Guide", author: "John Doe" } });
+addItem(electronicStore, { id: 200, quantity: 3, details: { brand: "Apple", model: "iPhone 14" } });
+
+// Function to get item details using type guards
 function getItemDetails(item: InventoryItem<any>): void {
   if ('title' in item.details) {
     console.log(`Book: ${item.details.title} by ${item.details.author}`);
@@ -38,123 +47,63 @@ function getItemDetails(item: InventoryItem<any>): void {
     console.log("Unknown item type");
   }
 }
-// Create the required objects
-const bookItem: InventoryItem<{ title: string; author: string }> = {
-  id: 1,
-  quantity: 5,
-  details: { title: "TypeScript Guide", author: "John Doe" }
-};
 
-const electronicItem: InventoryItem<{ brand: string; model: string }> = {
-  id: 2,
-  quantity: 3,
-  details: { brand: "TechCorp", model: "X200" }
-};
-
-const clothingItem: InventoryItem<{ size: string; color: string }> = {
-  id: 3,
-  quantity: 10,
-  details: { size: "M", color: "Blue" }
-};
-
-let bookInventory = [bookItem];
-let newBook: InventoryItem<{title: string, author:string}> = {
-    id: 4,
-    quantity: 2,
-    details: { title: "Advanced TypeScript", author: "Jane Smith" }
-}
-let electronicInventory = [electronicItem];
-let newElectronic: InventoryItem<{brand:string, model: string}> = {
-    id: 5,
-    quantity: 1,
-    details: { brand: "GadgetCorp", model: "Z500" }
+// Test with items from existing stores
+const foundBook = findItemById(bookStore, 100);
+if (foundBook) {
+  getItemDetails(foundBook);
 }
 
-const mixedBookInventory: InventoryItem<{ title: string; author: string }>[] = [
-  {
-    id: 10,
-    quantity: 3,
-    details: {
-      title: "JavaScript Basics",
-      author: "Alice Brown",
-    },
-  },
-  {
-    id: 11,
-    quantity: 7,
-    details: {
-      title: "React Fundamentals",
-      author: "Bob Wilson",
-    },
-  },
-  {
-    id: 12,
-    quantity: 2,
-    details: {
-      title: "Node.js Guide",
-      author: "Carol Davis",
-    },
-  },
+const foundElectronic = findItemById(electronicStore, 200);
+if (foundElectronic) {
+  getItemDetails(foundElectronic);
+}
+
+// Task interface and functions (adding them here since they're referenced)
+interface Task {
+    id: number;
+    title: string;
+    status: 'todo' | 'in-progress' | 'done';
+}
+
+function addTask(tasks: Task[], newTask: Task): Task[] {
+    return [...tasks, newTask];
+}
+
+function changeTaskStatus(task: Task, newStatus: 'todo' | 'in-progress' | 'done'): Task {
+    return { ...task, status: newStatus };
+}
+
+function listTasksByStatus(tasks: Task[], status: 'todo' | 'in-progress' | 'done'): Task[] {
+    return tasks.filter(task => task.status === status);
+}
+
+function printTaskSummary(task: Task): void {
+    console.log(`ID: ${task.id}, Title: ${task.title}, Status: ${task.status}`);
+}
+
+function printAllTaskSummaries(taskList: Task[]): void {
+    for (let task of taskList) {
+        printTaskSummary(task);
+    }
+}
+
+// Create projectTasks with initial tasks
+const projectTasks: Task[] = [
+  { id: 201, title: "Setup development environment", status: 'done' },
+  { id: 202, title: "Create project structure", status: 'todo' }
 ];
-const mixedElectronicInventory: InventoryItem<{ brand: string; model: string }>[] = [
-  {
-    id: 20,
-    quantity: 5,
-    details: {
-      brand: "Samsung",
-      model: "Galaxy S23",
-    },
-  },
-  {
-    id: 21,
-    quantity: 1,
-    details: {
-      brand: "Apple",
-      model: "iPhone 15",
-    },
-  },
-];
-const testBook: InventoryItem<any> = {
-    id: 300,
-    quantity: 6,
-    details: { title: "TypeScript Handbook", author: "Microsoft Team" }
-};
 
-const testElectronic: InventoryItem<any> = {
-    id: 400,
-    quantity: 2,
-    details: { brand: "Dell", model: "XPS 13" }
-};
+// Perform operations in sequence
+const expandedTasks = addTask(projectTasks, { id: 203, title: "Write documentation", status: 'todo' });
+const updatedProjectTasks = expandedTasks.map(task => task.id === 202 ? changeTaskStatus(task, 'in-progress') : task);
+const finalTasks = updatedProjectTasks.map(task => task.id === 203 ? changeTaskStatus(task, 'done') : task);
+const completedProjectTasks = listTasksByStatus(finalTasks, 'done');
 
-const unknownItem: InventoryItem<any> = {
-    id: 500,
-    quantity: 1,
-    details: { color: "Red", size: "Large" }
-};
-let updatedBookInventory = addItem(bookInventory,newBook);
-let updatedElectronicInventory = addItem(electronicInventory, newElectronic);
-
-let specificBook: BookItem = {
-    id: 100,
-    quantity: 8,
-    details: { title: "JavaScript Guide", author: "John Doe" }
-}
-let specificElectronic: ElectronicItem = {
-    id: 200,
-    quantity: 4,
-    details: { brand: "Apple", model: "iPhone 14" }
-}
-
-let bookStore: BookItem[] = [specificBook];
-let electronicStore: ElectronicItem[] = [specificElectronic];
-let anotherBook: BookItem = {
-    id: 101,
-    quantity: 3,
-    details: { title: "Design Patterns", author: "Gang of Four" }
-}
-let expandedBookStore: BookItem[] = addItem(bookStore,anotherBook);
-getItemDetails(testBook);
-getItemDetails(testElectronic);
-getItemDetails(unknownItem);
-getItemDetails(findItemByID(bookStore,100));
-getItemDetails(findItemByID(electronicStore, 200));
+// Print outputs
+console.log(projectTasks.length);
+console.log(finalTasks.length);
+console.log(completedProjectTasks.length);
+printTaskSummary(completedProjectTasks[0]);
+printTaskSummary(completedProjectTasks[completedProjectTasks.length - 1]);
+printAllTaskSummaries(finalTasks);
