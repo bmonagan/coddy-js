@@ -1,44 +1,41 @@
 export class BankAccount {
+  // TODO: Add a private field called #balance
+  #balance = 0;
+
+ 
+  // TODO: Change this.balance to this.#balance
   constructor(accountHolder, initialBalance = 0) {
     this.accountHolder = accountHolder;
-    this.balance = initialBalance;
+    this.#balance = initialBalance;
   }
   
+  // TODO: Change this.balance to this.#balance in the getBalance() method
   getBalance() {
-    return this.balance;
+    return this.#balance;
   }
   
+  // TODO: Change this.balance to this.#balance in the getAccountInfo() method
   getAccountInfo() {
-    return `${this.accountHolder}: $${this.balance}`;
+    return `${this.accountHolder}: $${this.#balance}`;
   }
   
-  // TODO: Add the deposit(amount) method
+  // TODO: Change this.balance to this.#balance in the deposit(amount) method
   deposit(amount) {
     if (amount > 0) {
-        this.balance += amount;
-        console.log(`Deposited $${amount}`);
+      this.#balance += amount;
+      console.log(`Deposited $${amount}`);
     } else {
-        console.log("Invalid deposit amount");
-    }};
-  withdraw(amount) {
-        if (amount > 0 && this.balance >= amount) {
-            this.balance -= amount;
-            console.log(`Withdrew $${amount}`);
-        } else {
-            console.log("Invalid withdrawal amount or insufficient funds");
-        }
+      console.log(`Invalid deposit amount`);
     }
-
-  // TODO: The method should check if the amount is positive (greater than 0)
-
-  // TODO: If valid: Adds the amount to the balance and logs: Deposited $${amount}, 
-  // otherwise logs: Invalid deposit amount
-
-  // TODO: Add the withdraw(amount) method
-
-  // TODO: The method should check if the amount is positive AND less than or equal to current balance
-
-  // TODO: If valid: Subtracts the amount from the balance and logs: Withdrew $${amount}, 
-  // otherwise logs: Invalid withdrawal amount or insufficient funds
-    
+  }
+  
+  // TODO: Change this.balance to this.#balance in the withdraw(amount) method
+  withdraw(amount) {
+    if (amount > 0 && amount <= this.#balance) {
+      this.#balance -= amount;
+      console.log(`Withdrew $${amount}`);
+    } else {
+      console.log(`Invalid withdrawal amount or insufficient funds`);
+    }
+  }
 }
