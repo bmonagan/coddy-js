@@ -1,16 +1,20 @@
-// TODO: Import the Shape class
-import  Shape  from './Shape.js';
+import { Shape } from './Shape.js';
 
-// TODO: Create a Circle class that extends Shape and export it
-export default class Circle extends Shape {
-    constructor(color,radius) {
-        super(color);
-        this.radius = radius;
-    }
+export class Circle extends Shape {
+  constructor(color, radius) {
+    super(color); 
+    this.radius = radius;
+  }
+  describe() {
+    return `${super.describe()} (Circle with radius ${this.radius})`;
+  }
+  calculateArea() {
+    return Math.PI * this.radius * this.radius;
+  }
 
 }
 
-export default class Shape {
+export class Shape {
   constructor(color) {
     this.color = color;
   }
@@ -20,13 +24,13 @@ export default class Shape {
   }
 }
 
-import  Shape  from './Shape.js';
-import  Circle  from './Circle.js';
-
+import { Shape } from './Shape.js';
+import { Circle } from './Circle.js';
 
 // Tests
 const basicShape = new Shape('red');
 console.log(basicShape.describe()); // "A red shape"
 
 const myCircle = new Circle('blue', 10);
-console.log(myCircle.describe()); // Should output: "A blue shape"
+console.log(myCircle.describe()); // Should output: "A blue shape (Circle with radius 10)"
+console.log(myCircle.calculateArea()); // Should output: "314.1592653589793"
