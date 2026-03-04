@@ -1,19 +1,32 @@
-// TODO: Create a Shape class
-export default class Shape { 
-    constructor(color) {
-        this.color = color;
-    }
-    describe() {
-        return `A ${this.color} shape`;
+// TODO: Import the Shape class
+import  Shape  from './Shape.js';
+
+// TODO: Create a Circle class that extends Shape and export it
+export default class Circle extends Shape {
+    constructor(color,radius) {
+        super(color);
+        this.radius = radius;
     }
 
 }
 
-===
-// TODO: Import the Shape class from './Shape.js';
-import Shape from './Shape.js';
+export default class Shape {
+  constructor(color) {
+    this.color = color;
+  }
+  
+  describe() {
+    return `A ${this.color} shape`;
+  }
+}
+
+import  Shape  from './Shape.js';
+import  Circle  from './Circle.js';
 
 
-// Test the Shape class
-const myShape = new Shape('blue');
-console.log(myShape.describe()); // Outputs: "A blue shape"
+// Tests
+const basicShape = new Shape('red');
+console.log(basicShape.describe()); // "A red shape"
+
+const myCircle = new Circle('blue', 10);
+console.log(myCircle.describe()); // Should output: "A blue shape"
